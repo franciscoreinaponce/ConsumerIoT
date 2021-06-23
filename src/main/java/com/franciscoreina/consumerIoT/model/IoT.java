@@ -67,9 +67,9 @@ public class IoT {
     public String getTrackerName() {
         String productName = ProductNames.UNKNOWN_TRACKER.toString();
 
-        if (this.getProductId().startsWith(ProductId.CPT_START_WITH.toString())) {
+        if (this.productId.startsWith(ProductId.CPT_START_WITH.toString())) {
             productName = ProductNames.CYCLE_PLUS_TRACKER.toString();
-        } else if (this.getProductId().startsWith(ProductId.GT_START_WITH.toString())){
+        } else if (this.productId.startsWith(ProductId.GT_START_WITH.toString())){
             productName = ProductNames.GENERAL_TRACKER.toString();
         }
 
