@@ -1,0 +1,1311 @@
+{
+	"info": {
+		"_postman_id": "eb1be426-562e-405b-a9f2-e3335a8b5ae3",
+		"name": "ConsumerIoT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Part 1",
+			"item": [
+				{
+					"name": "loadData - 200 Ok",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"data refreshed\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filepath\": \"C:/path/to/data.csv\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadData - 404 Not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"ERROR: no data file found\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filepath\": \"C:/path/to/thisFileDoesntExist.csv\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadData - 500 Internal Server Error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"ERROR: A technical exception occurred\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filepath\": \"C:/path/to/invalidData.csv\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Part 2",
+			"item": [
+				{
+					"name": "reportDevice - 200 Ok - CyclePlusTracker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155638\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:32:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-0.1736\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"51.5185\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"N/A\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Full\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155638&tstmp=1582605137000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155638"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605137000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - GeneralTracker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900001001\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:34:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-73.935242\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"40.73061\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900001001&tstmp=1582605257000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900001001"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605257000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - GeneralTracker with DateTime increased",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900001001\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:34:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-73.935242\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"40.73061\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900001001&tstmp=1582605257099",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900001001"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605257099"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Airplane On",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900233111\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:40:15\");     \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Inactive\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location not available: Please turn off airplane mode\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900233111&tstmp=1582605615000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900233111"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605615000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Airplane Off and GpsData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900001001\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:39:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-73.935242\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"40.73081\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900001001&tstmp=1582605557000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900001001"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605557000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Status Active",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900001001\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:39:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-73.935242\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"40.73081\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900001001&tstmp=1582605557000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900001001"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605557000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Status Inactive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900233111\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:40:15\");     \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Inactive\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location not available: Please turn off airplane mode\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900233111&tstmp=1582605615000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900233111"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605615000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Battery Full",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155638\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:31:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-0.1736\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"51.5185\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"N/A\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Full\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155638&tstmp=1582605077000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155638"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605077000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Battery Low",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155800\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:37:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-12.52025\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"45.5187\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Critical\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155800&tstmp=1582605437000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155800"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605437000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - Battery Critical",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155800\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:37:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-12.52025\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"45.5187\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Critical\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155800&tstmp=1582605437000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155800"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605437000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 400 Bad Request - Airplane Off and No GpsData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"ERROR: Device could not be located\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900233111&tstmp=1582612875000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900233111"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582612875000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 404 Not Found - Invalid ProductId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"ERROR: Id <insert productId> not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=0000000000&tstmp=1582605615000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "0000000000"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605615000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Part 3",
+			"item": [
+				{
+					"name": "reportDevice - 200 Ok - CyclePlusTracker Without 3 Consecutive Reads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155638\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:32:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-0.1736\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"51.5185\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"N/A\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Full\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155638&tstmp=1582605137000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155638"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605137000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - CyclePlusTracker With 3 Consecutive Reads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155638\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:33:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-0.1736\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"51.5185\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Inactive\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Full\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155638&tstmp=1582605197000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155638"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605197000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - CyclePlusTracker With MT 3 Consecutive Reads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155638\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:34:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-0.1736\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"51.5185\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Inactive\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Full\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155638&tstmp=1582605257000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155638"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605257000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - CyclePlusTracker With 3 Consecutive Reads but Diff GpsData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"WG11155800\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"CyclePlusTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:37:17\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-12.52025\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"45.5187\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Critical\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=WG11155800&tstmp=1582605437000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "WG11155800"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605437000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reportDevice - 200 Ok - GeneralTracker Without 3 Consecutive Reads",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"pm.test(\"Verify Json values\", function () { \r",
+									"    pm.expect(jsonData.id).is.to.equal(\"6900001001\"); \r",
+									"    pm.expect(jsonData.name).is.to.equal(\"GeneralTracker\"); \r",
+									"    pm.expect(jsonData.datetime).is.to.equal(\"25/02/2020 04:34:19\");     \r",
+									"    pm.expect(jsonData.long).is.to.equal(\"-73.935242\"); \r",
+									"    pm.expect(jsonData.lat).is.to.equal(\"40.73081\"); \r",
+									"    pm.expect(jsonData.status).is.to.equal(\"Active\"); \r",
+									"    pm.expect(jsonData.battery).is.to.equal(\"Low\"); \r",
+									"    pm.expect(jsonData.description).is.to.equal(\"SUCCESS: Location identified.\"); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/iot/event/v1?ProductId=6900001001&tstmp=1582605259000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"iot",
+								"event",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "ProductId",
+									"value": "6900001001"
+								},
+								{
+									"key": "tstmp",
+									"value": "1582605259000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
