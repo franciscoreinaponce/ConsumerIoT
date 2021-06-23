@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.constants;
+package com.franciscoreina.consumerIoT.constants.enumType;
 
 public enum SwitchModes {
 
@@ -6,7 +6,7 @@ public enum SwitchModes {
     OFF("OFF"),
     NA("N/A");
 
-    private String value;
+    private final String value;
 
     SwitchModes(String value) {
         this.value = value;

@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.constants;
+package com.franciscoreina.consumerIoT.constants.enumType;
 
 public enum Battery {
 
@@ -8,7 +8,7 @@ public enum Battery {
     BATTERY_LOW("Low"),
     BATTERY_CRITICAL("Critical");
 
-    private String value;
+    private final String value;
 
     Battery(String value) {
         this.value = value;

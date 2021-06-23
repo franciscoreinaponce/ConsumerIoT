@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.constants;
+package com.franciscoreina.consumerIoT.constants.enumType;
 
 public enum StatusDevice {
 
@@ -6,7 +6,7 @@ public enum StatusDevice {
     STATUS_INACTIVE("Inactive"),
     STATUS_NA("N/A");
 
-    private String value;
+    private final String value;
 
     StatusDevice(String value) {
         this.value = value;

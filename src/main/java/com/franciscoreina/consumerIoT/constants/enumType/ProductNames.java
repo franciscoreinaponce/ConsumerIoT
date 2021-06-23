@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.constants;
+package com.franciscoreina.consumerIoT.constants.enumType;
 
 public enum ProductNames {
 
@@ -6,7 +6,7 @@ public enum ProductNames {
     GENERAL_TRACKER("GeneralTracker"),
     UNKNOWN_TRACKER("Unknown");
 
-    private String value;
+    private final String value;
 
     ProductNames(String value) {
         this.value = value;
