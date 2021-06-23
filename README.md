@@ -1,5 +1,7 @@
 # Technical Test using Spring Boot 2.5 and JUnit 5 compiling with Java 8
 
+** The project right nows is being refactoring, so some tests are pending to be fixed **
+
 ## How to install / run the app
 
 ### Install the necessary applications
