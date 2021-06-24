@@ -1,7 +1,6 @@
 package com.franciscoreina.consumerIoT.controllers;
 
 import com.franciscoreina.consumerIoT.controller.IoTController;
-import com.franciscoreina.consumerIoT.converters.OptionalStringToOptionalLong;
 import com.franciscoreina.consumerIoT.dto.IoTRequestDTO;
 import com.franciscoreina.consumerIoT.dto.IoTResponseDTO;
 import com.franciscoreina.consumerIoT.service.IoTService;
@@ -25,62 +24,61 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 public class IoTControllerTest {
 
     @InjectMocks
-    private IoTController ioTController;
+    private IoTController iotController;
 
     @Mock
-    private IoTService ioTServiceMock;
+    private IoTService iotServiceMock;
 
     @Mock
-    private IoTRequestDTO ioTRequestDTOMock;
-
-    @Mock
-    private OptionalStringToOptionalLong optionalStringToOptionalLongMock;
+    private IoTRequestDTO iotRequestDTOMock;
 
     /**
      * Method to Test: loadData
-     * What is the Scenario: Successful service call which receives and returns valid DTO objects
+     * What is the Scenario: Successful service call which receives and returns a valid DTO
      * What is the Result: Returns a valid IoTResponseDTO with the expected description
      */
     @Test
     public void loadData_successfulServiceCall_validIotResponseDto() throws FileNotFoundException {
         // Given
-        IoTResponseDTO ioTResponseDTOService = IoTResponseDTO.builder().description(HTTP_200_DATA_REFRESHED).build();
-        given(ioTServiceMock.loadData(ioTRequestDTOMock)).willReturn(ioTResponseDTOService);
+        IoTResponseDTO iotResponseDTOService = IoTResponseDTO.builder().description(HTTP_200_DATA_REFRESHED).build();
+        given(iotServiceMock.loadData(iotRequestDTOMock)).willReturn(iotResponseDTOService);
 
         // When
-        ResponseEntity responseEntity = ioTController.loadData(ioTRequestDTOMock);
-        IoTResponseDTO ioTResponseDTO = (IoTResponseDTO) responseEntity.getBody();
+        ResponseEntity<IoTResponseDTO> responseEntity = iotController.loadData(iotRequestDTOMock);
+        IoTResponseDTO iotResponseDTO = responseEntity.getBody();
 
         // Then
         assertThat(responseEntity, notNullValue());
         assertThat(responseEntity.getStatusCode(), is(HttpStatus.OK));
-        assertThat(ioTResponseDTO, notNullValue());
-        assertThat(ioTResponseDTO.getDescription(), is("data refreshed"));
+        assertThat(iotResponseDTO, notNullValue());
+        assertThat(iotResponseDTO.getDescription(), is("data refreshed"));
     }
 
     /**
      * Method to Test: loadData
-     * What is the Scenario: Unsuccessful service call which receives a DTO but throws an exception during execution
-     * What is the Result: Throws FileNotFoundException
+     * What is the Scenario: Unsuccessful service call which receives a DTO but throws an exception
+     * What is the Result: FileNotFoundException thrown
      */
     @Test
     public void loadData_unsuccessfulServiceCall_dataNotFoundException() throws FileNotFoundException {
         // Given
-        given(ioTServiceMock.loadData(ioTRequestDTOMock)).willThrow(new FileNotFoundException());
+        given(iotServiceMock.loadData(iotRequestDTOMock)).willThrow(new FileNotFoundException());
 
         // When
-        assertThrows(FileNotFoundException.class, () -> ioTController.loadData(ioTRequestDTOMock));
+        assertThrows(FileNotFoundException.class, () -> iotController.loadData(iotRequestDTOMock));
     }
 
     /**
      * Method to Test: reportDevice
-     * What is the Scenario: Successful service call which receives a valid productId and DateTime and returns a valid DTO
+     * What is the Scenario: Successful service call which receives a ProductId and a DateTime and returns a valid DTO
      * What is the Result: Returns a valid IoTResponseDTO with the expected attributes
      */
     @Test
@@ -95,10 +93,10 @@ public class IoTControllerTest {
                 .status("Active")
                 .battery("Low")
                 .description(HTTP_200_LOCATION_IDENTIFIED).build();
-        given(ioTServiceMock.reportDevice("123", OptionalLong.of(456))).willReturn(ioTResponseDTOService);
+        given(iotServiceMock.reportDevice(anyString(), any(OptionalLong.class))).willReturn(ioTResponseDTOService);
 
         // When
-        ResponseEntity responseEntity = ioTController.reportDevice("123", Optional.of("456"));
+        ResponseEntity responseEntity = iotController.reportDevice("123", Optional.of("456"));
         IoTResponseDTO ioTResponseDTO = (IoTResponseDTO) responseEntity.getBody();
 
         // Then
@@ -117,16 +115,16 @@ public class IoTControllerTest {
 
     /**
      * Method to Test: reportDevice
-     * What is the Scenario: Unsuccessful service call which a valid productId and DateTime but throws an exception during execution
-     * What is the Result: Throws NoSuchElementException
+     * What is the Scenario: Unsuccessful service call which a receives a ProductId and DateTime but throws an exception
+     * What is the Result: NoSuchElementException thrown
      */
     @Test
     public void reportDevice_unsuccessfulServiceCall_noSuchElementException() throws AttributeNotFoundException {
         // Given
-        given(ioTServiceMock.reportDevice("123", OptionalLong.of(456))).willThrow(new NoSuchElementException());
+        given(iotServiceMock.reportDevice(anyString(), any(OptionalLong.class))).willThrow(new NoSuchElementException());
 
         // When
-        assertThrows(NoSuchElementException.class, () -> ioTController.reportDevice("123", Optional.of("456")));
+        assertThrows(NoSuchElementException.class, () -> iotController.reportDevice("123", Optional.of("456")));
     }
 
 }
