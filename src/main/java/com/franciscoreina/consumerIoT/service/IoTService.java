@@ -1,13 +1,13 @@
 package com.franciscoreina.consumerIoT.service;
 
 import com.franciscoreina.consumerIoT.constants.Messages;
-import com.franciscoreina.consumerIoT.constants.ProductNames;
-import com.franciscoreina.consumerIoT.constants.StatusDevice;
+import com.franciscoreina.consumerIoT.constants.enumType.ProductNames;
+import com.franciscoreina.consumerIoT.constants.enumType.StatusDevice;
 import com.franciscoreina.consumerIoT.dto.IoTRequestDTO;
 import com.franciscoreina.consumerIoT.dto.IoTResponseDTO;
 import com.franciscoreina.consumerIoT.model.IoT;
 import com.franciscoreina.consumerIoT.repository.IoTRepository;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.franciscoreina.consumerIoT.util.CsvProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.management.AttributeNotFoundException;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
@@ -23,8 +22,6 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.OptionalLong;
 import java.util.stream.Collectors;
-
-import static com.franciscoreina.consumerIoT.constants.Constants.SEMICOLON;
 
 @Service
 public class IoTService {
@@ -37,21 +34,10 @@ public class IoTService {
     public IoTResponseDTO loadData(IoTRequestDTO ioTRequestDTO) throws FileNotFoundException {
         LOGGER.info("+++ Service entry +++");
 
-        ioTRepository.saveData(retrieveDataFromCsv(ioTRequestDTO.getFilepath()));
+        ioTRepository.saveData(CsvProcessor.processTrackingDevicesFile(ioTRequestDTO.getFilepath()));
         LOGGER.info("+++ IoT list updated +++");
 
         return IoTResponseDTO.builder().description(Messages.HTTP_200_DATA_REFRESHED).build();
-    }
-
-    private List retrieveDataFromCsv(String filepath) throws FileNotFoundException {
-        LOGGER.info("+++ Retrieving and mapping data from {} +++", filepath);
-
-        return new CsvToBeanBuilder(new FileReader(filepath))
-                .withSkipLines(1)
-                .withSeparator(SEMICOLON)
-                .withType(IoT.class)
-                .build()
-                .parse();
     }
 
     public IoTResponseDTO reportDevice(String productId, OptionalLong tstmp) throws AttributeNotFoundException {
