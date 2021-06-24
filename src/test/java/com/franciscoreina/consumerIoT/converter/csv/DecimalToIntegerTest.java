@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.converters.csv;
+package com.franciscoreina.consumerIoT.converter.csv;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

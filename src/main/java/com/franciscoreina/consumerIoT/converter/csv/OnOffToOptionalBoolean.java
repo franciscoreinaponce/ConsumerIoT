@@ -1,6 +1,6 @@
-package com.franciscoreina.consumerIoT.converters.csv;
+package com.franciscoreina.consumerIoT.converter.csv;
 
-import com.franciscoreina.consumerIoT.constants.SwitchModes;
+import com.franciscoreina.consumerIoT.constants.enumType.SwitchModes;
 import com.opencsv.bean.AbstractBeanField;
 
 import java.util.Optional;

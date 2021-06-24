@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.converters.csv;
+package com.franciscoreina.consumerIoT.converter.csv;
 
 import com.opencsv.bean.AbstractBeanField;
 

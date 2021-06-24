@@ -1,10 +1,10 @@
 package com.franciscoreina.consumerIoT.model;
 
-import com.franciscoreina.consumerIoT.constants.Battery;
-import com.franciscoreina.consumerIoT.constants.ProductId;
-import com.franciscoreina.consumerIoT.constants.ProductNames;
-import com.franciscoreina.consumerIoT.converters.csv.DecimalToInteger;
-import com.franciscoreina.consumerIoT.converters.csv.OnOffToOptionalBoolean;
+import com.franciscoreina.consumerIoT.constants.enumType.Battery;
+import com.franciscoreina.consumerIoT.constants.enumType.ProductId;
+import com.franciscoreina.consumerIoT.constants.enumType.ProductNames;
+import com.franciscoreina.consumerIoT.converter.csv.DecimalToInteger;
+import com.franciscoreina.consumerIoT.converter.csv.OnOffToOptionalBoolean;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import com.opencsv.bean.CsvNumber;
@@ -69,7 +69,7 @@ public class IoT {
 
         if (this.productId.startsWith(ProductId.CPT_START_WITH.toString())) {
             productName = ProductNames.CYCLE_PLUS_TRACKER.toString();
-        } else if (this.productId.startsWith(ProductId.GT_START_WITH.toString())){
+        } else if (this.productId.startsWith(ProductId.GT_START_WITH.toString())) {
             productName = ProductNames.GENERAL_TRACKER.toString();
         }
 

@@ -1,7 +1,8 @@
 package com.franciscoreina.consumerIoT.controller;
 
-import com.franciscoreina.consumerIoT.converters.OptionalStringToOptionalLong;
+import com.franciscoreina.consumerIoT.converter.OptionalStringToOptionalLong;
 import com.franciscoreina.consumerIoT.dto.IoTRequestDTO;
+import com.franciscoreina.consumerIoT.dto.IoTResponseDTO;
 import com.franciscoreina.consumerIoT.service.IoTService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +32,15 @@ public class IoTController {
     private IoTService ioTService;
 
     @PostMapping(path = "/event/v1/", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity loadData(@RequestBody IoTRequestDTO ioTRequestDTO) throws FileNotFoundException {
+    public ResponseEntity<IoTResponseDTO> loadData(@RequestBody IoTRequestDTO ioTRequestDTO) throws FileNotFoundException {
         LOGGER.info("+++ Calling loadData +++");
 
         return new ResponseEntity<>(ioTService.loadData(ioTRequestDTO), HttpStatus.OK);
     }
 
     @GetMapping(path = "/event/v1", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity reportDevice(@RequestParam("ProductId") String productId, @RequestParam Optional<String> tstmp) throws AttributeNotFoundException {
+    public ResponseEntity<IoTResponseDTO> reportDevice(@RequestParam("ProductId") String productId,
+                                                       @RequestParam Optional<String> tstmp) throws AttributeNotFoundException {
         LOGGER.info("+++ Calling reportDevice +++");
 
         return new ResponseEntity<>(ioTService.reportDevice(productId, OptionalStringToOptionalLong.convert(tstmp)), HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.franciscoreina.consumerIoT.converters;
+package com.franciscoreina.consumerIoT.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

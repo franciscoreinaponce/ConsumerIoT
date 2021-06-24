@@ -3,7 +3,7 @@ package com.franciscoreina.consumerIoT.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.franciscoreina.consumerIoT.constants.StatusDevice;
+import com.franciscoreina.consumerIoT.constants.enumType.StatusDevice;
 import com.franciscoreina.consumerIoT.model.IoT;
 import lombok.Builder;
 import lombok.Data;
