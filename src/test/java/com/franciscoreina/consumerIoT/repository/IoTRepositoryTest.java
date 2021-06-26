@@ -116,11 +116,11 @@ public class IoTRepositoryTest {
 
     /**
      * Method to Test: saveData
-     * What is the Scenario: Retrieves previous records to the given date for CyclePlusTracker products
+     * What is the Scenario: Retrieves the previous records to a given DateTime and a ProductId
      * What is the Result: IoT list has been filtered by retrieving the 2 expected records
      */
     @Test
-    public void retrieveProductsToDate_retrieveTwoOldestCptRecords_listFilteredByData() {
+    public void retrieveProductsToDate_retrieveTwoOldestRecords_listFilteredByData() {
         // Given
         ioTRepository.saveData(createIoTList());
 
@@ -146,6 +146,46 @@ public class IoTRepositoryTest {
 
         // When
         List<IoT> mockIoTListUpdated = ioTRepository.retrieveProductsToDate("WG11155638", 1582605137000L);
+
+        // Then
+        assertThat(mockIoTListUpdated, notNullValue());
+        assertThat(mockIoTListUpdated.size(), is(2));
+        assertThat(mockIoTListUpdated.get(0), is(iotCPT_1));
+        assertThat(mockIoTListUpdated.get(1), is(iotCPT_2));
+    }
+
+    /**
+     * Method to Test: saveData
+     * What is the Scenario: Retrieves the previous records closest to a given DateTime and a ProductId
+     * What is the Result: IoT list has been filtered by retrieving the 2 expected records
+     */
+    @Test
+    public void retrieveProductsToDate_retrieveTheClosestRecords_listFilteredByData() {
+        // Given
+        ioTRepository.saveData(createIoTList());
+
+        IoT iotCPT_1 = new IoT();
+        iotCPT_1.setDateTime(1582605077000L);
+        iotCPT_1.setEventId(10001);
+        iotCPT_1.setProductId("WG11155638");
+        iotCPT_1.setLatitude(new BigDecimal("51.5185"));
+        iotCPT_1.setLongitude(new BigDecimal("-0.1736"));
+        iotCPT_1.setBattery(99);
+        iotCPT_1.setLight(Optional.of(false));
+        iotCPT_1.setAirplaneMode(Optional.of(false));
+
+        IoT iotCPT_2 = new IoT();
+        iotCPT_2.setDateTime(1582605137000L);
+        iotCPT_2.setEventId(10002);
+        iotCPT_2.setProductId("WG11155638");
+        iotCPT_2.setLatitude(new BigDecimal("51.5185"));
+        iotCPT_2.setLongitude(new BigDecimal("-0.1736"));
+        iotCPT_2.setBattery(99);
+        iotCPT_2.setLight(Optional.of(false));
+        iotCPT_2.setAirplaneMode(Optional.of(false));
+
+        // When
+        List<IoT> mockIoTListUpdated = ioTRepository.retrieveProductsToDate("WG11155638", 1582605137050L);
 
         // Then
         assertThat(mockIoTListUpdated, notNullValue());

@@ -72,7 +72,7 @@ public class IoTControllerTest {
         // Given
         given(iotServiceMock.loadData(iotRequestDTOMock)).willThrow(new FileNotFoundException());
 
-        // When
+        // When-Then
         assertThrows(FileNotFoundException.class, () -> iotController.loadData(iotRequestDTOMock));
     }
 
@@ -123,7 +123,7 @@ public class IoTControllerTest {
         // Given
         given(iotServiceMock.reportDevice(anyString(), any(OptionalLong.class))).willThrow(new NoSuchElementException());
 
-        // When
+        // When-Then
         assertThrows(NoSuchElementException.class, () -> iotController.reportDevice("123", Optional.of("456")));
     }
 
