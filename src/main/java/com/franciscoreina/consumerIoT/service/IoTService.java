@@ -99,7 +99,7 @@ public class IoTService {
 
     /**
      * (This functionality is only for CyclePlusTracker devices)
-     * 
+     * <p>
      * Given a IoT list returns the device status based on the GPS data retrieved.
      *
      * @param iotList of CyclePlusTracker devices

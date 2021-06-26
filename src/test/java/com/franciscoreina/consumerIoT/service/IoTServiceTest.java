@@ -12,12 +12,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.powermock.reflect.Whitebox;
 
 import javax.management.AttributeNotFoundException;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -573,6 +575,45 @@ public class IoTServiceTest {
         assertThat(ioTResponseDTO.getStatus(), is("Inactive"));
         assertThat(ioTResponseDTO.getBattery(), is("Low"));
         assertThat(ioTResponseDTO.getDescription(), is("SUCCESS: Location not available: Please turn off airplane mode"));
+    }
+
+    /**
+     * EXAMPLE OF TEST ON PRIVATE METHODS USING POWERMOCK
+     * <p>
+     * Method to Test: getStatusForCyclePlusTrackerDevices
+     * What is the Scenario: Given 2 CyclePlusTracker IoTs, returns the status N/A
+     * since there are less than 3 datasets of GPS coordinates
+     * What is the Result: Returns the status N/A
+     */
+    @Test
+    public void getStatusForCyclePlusTrackerDevices_getStatusGiven2CyclePlusDeviceRecords_statusNA() throws Exception {
+        // Given
+        IoT iot_1 = new IoT();
+        iot_1.setDateTime(1582605077000L);
+        iot_1.setEventId(10001);
+        iot_1.setProductId("WG11155638");
+        iot_1.setLatitude(new BigDecimal("51.5185"));
+        iot_1.setLongitude(new BigDecimal("-0.1736"));
+        iot_1.setBattery(99);
+        iot_1.setLight(Optional.of(false));
+        iot_1.setAirplaneMode(Optional.of(false));
+
+        IoT iot_2 = new IoT();
+        iot_2.setDateTime(1582605137000L);
+        iot_2.setEventId(10002);
+        iot_2.setProductId("WG11155638");
+        iot_2.setLatitude(new BigDecimal("51.5185"));
+        iot_2.setLongitude(new BigDecimal("-0.1736"));
+        iot_2.setBattery(99);
+        iot_2.setLight(Optional.of(false));
+        iot_2.setAirplaneMode(Optional.of(false));
+
+        // When
+        String status = Whitebox.invokeMethod(
+                ioTService, "getStatusForCyclePlusTrackerDevices", Arrays.asList(iot_1, iot_2));
+
+        // Then
+        assertThat(status, is("N/A"));
     }
 
 }
