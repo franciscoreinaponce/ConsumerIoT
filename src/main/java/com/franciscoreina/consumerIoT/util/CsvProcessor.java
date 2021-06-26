@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.franciscoreina.consumerIoT.constants.Constants.SEMICOLON;
 
-public class CsvProcessor {
+public final class CsvProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvProcessor.class);
 
