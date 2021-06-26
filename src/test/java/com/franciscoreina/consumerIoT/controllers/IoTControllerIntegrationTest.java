@@ -44,7 +44,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void loadData_successfulServiceCall_responseHttp200() {
         // Given
@@ -62,7 +62,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void loadData_unsuccessfulServiceCall_responseHttp404() {
         // Given
@@ -80,7 +80,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void loadData_unsuccessfulServiceCall_responseHttp500() {
         // Given
@@ -98,7 +98,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void reportDevice_successfulServiceCall_responseHttp200() {
         // Given
@@ -117,13 +117,13 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void reportDevice_successfulServiceCallWithoutTstmp_responseHttp200() {
         // Given
         loadDataHelper();
         String url = "http://localhost:" + port + "/iot/event/v1?ProductId=WG11155638";
-        String expected = "{\"id\":\"WG11155638\",\"name\":\"CyclePlusTracker\",\"datetime\":\"25/02/2020 04:38:17\",\"long\":\"-0.17538\",\"lat\":\"51.5185\",\"status\":\"Inactive\",\"battery\":\"High\",\"description\":\"SUCCESS: Location identified.\"}";
+        String expected = "{\"id\":\"WG11155638\",\"name\":\"CyclePlusTracker\",\"datetime\":\"25/02/2020 04:38:17\",\"long\":\"-0.17538\",\"lat\":\"51.5185\",\"status\":\"Active\",\"battery\":\"High\",\"description\":\"SUCCESS: Location identified.\"}";
 
         // When
         ResponseEntity response = testRestTemplate.getForEntity(url, String.class);
@@ -136,7 +136,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void reportDevice_unsuccessfulServiceCall_responseHttp400() {
         // Given
@@ -154,7 +154,7 @@ public class IoTControllerIntegrationTest {
 
     /**
      * TODO: Add description
-     * */
+     */
     @Test
     public void reportDevice_unsuccessfulServiceCall_responseHttp404() {
         // Given

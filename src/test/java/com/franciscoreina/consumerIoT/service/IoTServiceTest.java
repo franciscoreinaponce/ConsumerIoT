@@ -6,6 +6,7 @@ import com.franciscoreina.consumerIoT.model.IoT;
 import com.franciscoreina.consumerIoT.repository.IoTRepository;
 import com.franciscoreina.consumerIoT.util.CsvProcessor;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,7 +46,7 @@ public class IoTServiceTest {
     private static final String VALID_CSV = ".\\src\\test\\resources\\data.csv";
 
     @BeforeAll
-    public static void setup() {
+    public static void setUp() {
         mockStatic(CsvProcessor.class);
     }
 
@@ -57,7 +58,8 @@ public class IoTServiceTest {
     @Test
     public void loadData_validCsvPathAsInput_validIotResponseDto() throws FileNotFoundException {
         // Given
-        IoTRequestDTO ioTRequestDTO = IoTRequestDTO.builder().filepath(VALID_CSV).build();
+        IoTRequestDTO ioTRequestDTO = new IoTRequestDTO();
+        ioTRequestDTO.setFilepath(VALID_CSV);
         given(CsvProcessor.processTrackingDevicesFile(anyString())).willReturn(anyList());
 
         // When
@@ -76,7 +78,8 @@ public class IoTServiceTest {
     @Test
     public void loadData_parseInvalidCsv_fileNotFoundException() throws FileNotFoundException {
         // Given
-        IoTRequestDTO ioTRequestDTO = IoTRequestDTO.builder().filepath(INVALID_PATH).build();
+        IoTRequestDTO ioTRequestDTO = new IoTRequestDTO();
+        ioTRequestDTO.setFilepath(INVALID_PATH);
         given(CsvProcessor.processTrackingDevicesFile(ioTRequestDTO.getFilepath()))
                 .willThrow(FileNotFoundException.class);
 
@@ -92,7 +95,8 @@ public class IoTServiceTest {
     @Test
     public void loadData_parseInvalidCsv_runtimeException() throws FileNotFoundException {
         // Given
-        IoTRequestDTO ioTRequestDTO = IoTRequestDTO.builder().filepath(INVALID_CSV).build();
+        IoTRequestDTO ioTRequestDTO = new IoTRequestDTO();
+        ioTRequestDTO.setFilepath(INVALID_CSV);
         given(CsvProcessor.processTrackingDevicesFile(ioTRequestDTO.getFilepath()))
                 .willThrow(RuntimeException.class);
 
@@ -180,7 +184,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(false));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
@@ -215,7 +219,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(false));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When-Then
         assertThrows(AttributeNotFoundException.class, () -> ioTService
@@ -239,7 +243,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(true));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
@@ -275,7 +279,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(false));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
@@ -313,7 +317,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(false));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
@@ -519,7 +523,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(false));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
@@ -555,7 +559,7 @@ public class IoTServiceTest {
         iot_1.setAirplaneMode(Optional.of(true));
 
         given(ioTRepository.retrieveProductsToDate(anyString(), any(Long.class)))
-                .willReturn(Arrays.asList(iot_1));
+                .willReturn(Collections.singletonList(iot_1));
 
         // When
         IoTResponseDTO ioTResponseDTO = ioTService
