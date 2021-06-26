@@ -31,6 +31,12 @@ public class IoTService {
     @Autowired
     private IoTRepository ioTRepository;
 
+    /**
+     * Given a path to a CSV file, loads the data into memory
+     *
+     * @param ioTRequestDTO contains the CSV filepath
+     * @return IoTResponseDTO with a success  message if the upload was successful, with an error message otherwise
+     */
     public IoTResponseDTO loadData(IoTRequestDTO ioTRequestDTO) throws FileNotFoundException {
         LOGGER.info("+++ Service entry +++");
 
@@ -40,6 +46,14 @@ public class IoTService {
         return IoTResponseDTO.builder().description(Messages.HTTP_200_DATA_REFRESHED).build();
     }
 
+    /**
+     * Given a ProductId and a DateTime, it searches for IoTs that match the ProductId
+     * and have a DateTime equal to or earlier than the one provided.
+     *
+     * @param productId to look for
+     * @param tstmp     is the DateTime to look for
+     * @return IoT, if data is not found, returns an error
+     */
     public IoTResponseDTO reportDevice(String productId, OptionalLong tstmp) throws AttributeNotFoundException {
         LOGGER.info("+++ Service entry +++");
         long timeToFilter = tstmp.orElse(Instant.now().toEpochMilli());
@@ -59,10 +73,9 @@ public class IoTService {
     }
 
     /**
-     * Given a IoT list and a date, it searches for the IoT with a date closest to the one provided.
-     * and has a date equal to or earlier than the one provided.
+     * Given a IoT list and a DateTime, it searches for the IoT with a DateTime closest to the one provided.
      *
-     * @param iotList IoT to be filtered
+     * @param iotList      IoT to be filtered
      * @param timeToFilter data to look for
      * @return IoT if exists, otherwise it throws an exception
      * @throws NoSuchElementException if data is not found
@@ -85,6 +98,8 @@ public class IoTService {
     }
 
     /**
+     * (This functionality is only for CyclePlusTracker devices)
+     * 
      * Given a IoT list returns the device status based on the GPS data retrieved.
      *
      * @param iotList of CyclePlusTracker devices

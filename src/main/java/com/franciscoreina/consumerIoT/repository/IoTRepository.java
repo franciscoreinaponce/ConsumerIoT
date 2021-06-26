@@ -30,8 +30,8 @@ public class IoTRepository {
     }
 
     /**
-     * Given a productId and a date, it searches for IoTs that match the productId
-     * and have a date equal to or earlier than the one provided.
+     * Given a ProductId and a DateTime, it searches for IoTs that match the ProductId
+     * and have a DateTime equal to or earlier than the one provided.
      *
      * @param productId    to look for
      * @param timeToFilter to look for

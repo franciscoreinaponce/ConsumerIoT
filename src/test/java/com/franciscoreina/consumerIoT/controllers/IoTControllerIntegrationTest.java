@@ -43,7 +43,9 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Successful service call which receives a valid CSV path
+     * What is the Result: Returns HTTP Status 200
      */
     @Test
     public void loadData_successfulServiceCall_responseHttp200() {
@@ -61,7 +63,9 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Unsuccessful service call which receives an invalid CSV path
+     * What is the Result: Returns HTTP Status 404
      */
     @Test
     public void loadData_unsuccessfulServiceCall_responseHttp404() {
@@ -79,7 +83,9 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Unsuccessful service call which receives an invalid CSV file
+     * What is the Result: Returns HTTP Status 500
      */
     @Test
     public void loadData_unsuccessfulServiceCall_responseHttp500() {
@@ -97,7 +103,10 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Successful service call which receives a valid ProductId and DateTime
+     * and returns the IoT data found
+     * What is the Result: Returns HTTP Status 200
      */
     @Test
     public void reportDevice_successfulServiceCall_responseHttp200() {
@@ -116,7 +125,9 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Successful service call which receives a valid ProductId and returns the IoT data found
+     * What is the Result: Returns HTTP Status 200
      */
     @Test
     public void reportDevice_successfulServiceCallWithoutTstmp_responseHttp200() {
@@ -135,7 +146,10 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Unsuccessful service call which receives a valid ProductId and DateTime
+     * but the IoT found has no location data
+     * What is the Result: Returns HTTP Status 400
      */
     @Test
     public void reportDevice_unsuccessfulServiceCall_responseHttp400() {
@@ -153,7 +167,9 @@ public class IoTControllerIntegrationTest {
     }
 
     /**
-     * TODO: Add description
+     * Method to Test: loadData
+     * What is the Scenario: Unsuccessful service call which receives a invalid ProductId
+     * What is the Result: Returns HTTP Status 404
      */
     @Test
     public void reportDevice_unsuccessfulServiceCall_responseHttp404() {
