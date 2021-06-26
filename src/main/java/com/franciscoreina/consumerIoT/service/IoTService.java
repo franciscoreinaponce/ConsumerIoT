@@ -45,8 +45,8 @@ public class IoTService {
         long timeToFilter = tstmp.orElse(Instant.now().toEpochMilli());
 
         List<IoT> iotList = ioTRepository.retrieveProductsToDate(productId, timeToFilter);
-
         IoT iotFound = findIotByDateTime(iotList, timeToFilter);
+
         checkIfDeviceIsAvailable(iotFound);
 
         String status = null;
@@ -95,7 +95,7 @@ public class IoTService {
         LOGGER.info("+++ Get status for CyclePlusTracker device +++");
 
         List<IoT> iotListFiltered = iotList.stream()
-                .sorted(Comparator.comparingLong(IoT::getDateTime))
+                .sorted(Comparator.comparingLong(IoT::getDateTime).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
 
