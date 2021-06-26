@@ -1,7 +1,5 @@
 # Technical Test using Spring Boot 2.5 and JUnit 5 compiling with Java 8
 
-** The project right nows is being refactoring, so some tests are pending to be fixed **
-
 ## How to install / run the app
 
 ### Install the necessary applications
@@ -13,7 +11,7 @@ Configure Maven: https://maven.apache.org/install.html
 
 ### Run the ConsumerIoT app
 
-Unzip the *ConsumerIoT.zip* file which contains de project.  
+Clone the *ConsumerIoT* repository which contains de project.  
 
 Once you have configured the JDK and Maven, run the following commands to:
 
@@ -29,7 +27,7 @@ Once you have configured the JDK and Maven, run the following commands to:
 
 The project has unit and integration tests which can be executed by means of the above mentioned command *mvn test*.  
 
-Currently, the project has a coverage of +80% with unit tests which increases to +90% with integration tests.
+Currently, the project has a coverage of +90% with unit tests which increases to +95% with integration tests.
 
 <code>*</code> 
 I would like to mention that some test has been implemented on some private method to demonstrate 
@@ -42,11 +40,12 @@ which contains the existing endpoints and examples of calls for the different sc
 
 Download Postman: https://www.postman.com/downloads/
 
+## Assumptions
+
+It is assumed that the only optional fields in the CSV file are "Latitude" and "Longitude".
 
 ## Improvements
 - Add Swagger
-- Increase test coverage until 100%
-
 
 ### Current stack
 
